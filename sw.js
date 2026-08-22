@@ -1,9 +1,9 @@
 /**
- * MOVIBUS LÍNEA 34 - SERVICE WORKER (AUTO-UPDATE ENGINE)
- * Production Cache with Network-First Strategy for Instant Updates
+ * MOVIBUS LÍNEA 34 - SERVICE WORKER (GITHUB PAGES & PWA READY)
+ * Ultra-stable cache engine with Network-First strategy
  */
 
-const CACHE_NAME = 'movibus-l34-v4';
+const CACHE_NAME = 'movibus-l34-v5';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -15,24 +15,28 @@ const ASSETS_TO_CACHE = [
   './icons/icon-512.png',
   './icons/favicon.png',
   './icons/favicon-32x32.png',
-  './icons/apple-touch-icon.png',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+  './icons/apple-touch-icon.png'
 ];
 
-// Install: Cache all core assets and activate immediately
+// Install: Cache all available core assets safely
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE).catch((err) => {
-        console.warn('Some assets could not be cached on install:', err);
-      });
+      return Promise.allSettled(
+        ASSETS_TO_CACHE.map((url) =>
+          fetch(url, { cache: 'no-cache' })
+            .then((res) => {
+              if (res.ok) return cache.put(url, res);
+            })
+            .catch(() => {})
+        )
+      );
     })
   );
 });
 
-// Activate: Remove outdated caches and take control of all open clients
+// Activate: Remove outdated caches and take control
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -57,7 +61,6 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .then((networkResponse) => {
-        // If fetch succeeded, update cache in background
         if (networkResponse && networkResponse.status === 200 && event.request.url.startsWith('http')) {
           const responseClone = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
@@ -67,14 +70,12 @@ self.addEventListener('fetch', (event) => {
         return networkResponse;
       })
       .catch(() => {
-        // If network failed (offline), serve from cache
         return caches.match(event.request).then((cachedResponse) => {
           if (cachedResponse) {
             return cachedResponse;
           }
-          // Fallback to index.html for navigation requests
           if (event.request.destination === 'document' || event.request.mode === 'navigate') {
-            return caches.match('./index.html');
+            return caches.match('./index.html') || caches.match('./');
           }
         });
       })

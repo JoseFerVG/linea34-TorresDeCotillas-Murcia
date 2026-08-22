@@ -907,93 +907,82 @@ function renderInfoTab() {
   if (!container) return;
 
   container.innerHTML = `
-    <!-- DOWNLOAD & INSTALL APP CARD -->
-    <div class="info-section-card" style="border: 2px solid var(--movibus-lime); background: linear-gradient(145deg, var(--bg-card) 0%, var(--movibus-lime-soft) 100%); text-align: center;">
-      <div class="group-title-txt" style="color: var(--movibus-dark); justify-content: center; margin-bottom: 8px;">
-        ${SVG_ICONS.install}
-        <span>Descargar e Instalar App</span>
-      </div>
-
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 16px; line-height: 1.5;">
-        Instala la app en tu móvil para consultar los horarios al instante, recibir avisos de salida y usarla <strong>sin conexión a internet</strong>.
-      </p>
-
-      <button onclick="installPWA()" class="contact-action-row" style="width: 100%; background: var(--movibus-primary); color: #ffffff; border: none; cursor: pointer; justify-content: space-between; padding: 14px 16px; border-radius: var(--radius-md); box-shadow: 0 4px 14px rgba(6, 72, 60, 0.25);">
-        <div class="contact-left-block">
-          <div class="contact-icon-circle" style="background: var(--movibus-lime); color: var(--movibus-dark); width: 38px; height: 38px;">
-            ${SVG_ICONS.install}
-          </div>
-          <div style="text-align: left;">
-            <div style="font-size: 1rem; font-weight: 800; color: #ffffff;">Descargar App</div>
-            <div style="font-size: 0.75rem; color: #d0ebe3;">Instalación directa en pantalla de inicio</div>
-          </div>
-        </div>
-        <span style="font-size: 0.9rem; color: var(--movibus-lime); font-weight: 800; display: flex; align-items: center; gap: 4px;">
-          Descargar ↓
-        </span>
-      </button>
-
-      <div style="margin-top: 14px; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.45; text-align: left; background: var(--bg-card); padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-        <strong>¿Cómo instalar según tu móvil?</strong><br>
-        • <strong>Android (Chrome):</strong> Pulsa el botón <em>"Descargar App"</em> o en el menú ⋮ elige <em>"Añadir a pantalla de inicio"</em>.<br>
-        • <strong>iPhone / iOS (Safari):</strong> Pulsa el botón <strong>Compartir</strong> (icono de cuadrado con flecha hacia arriba) y selecciona <strong>"Añadir a la pantalla de inicio"</strong>.
-      </div>
-
-      <button onclick="checkForAppUpdates()" class="btn-stop-action is-fav" style="margin-top: 12px; width: 100%; justify-content: center; padding: 9px 14px; font-size: 0.8rem; font-weight: 800; cursor: pointer;">
-        ${SVG_ICONS.bolt}
-        <span>Comprobar Actualizaciones en Vivo</span>
-      </button>
-    </div>
-
-    <!-- CONTACT & PDF CARD -->
+    <!-- INFO & ACTIONS CARD -->
     <div class="info-section-card">
-      <div class="group-title-txt" style="justify-content: center; margin-bottom: 8px;">
-        ${SVG_ICONS.phone}
-        <span>Atención al Cliente e Información</span>
+      <div class="group-title-txt" style="justify-content: center; margin-bottom: 4px;">
+        ${SVG_ICONS.bus}
+        <span>Línea 34: Torres de Cotillas – Murcia</span>
       </div>
 
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 14px; text-align: center;">
-        Servicio oficial operado por <strong>Interbus Murcia</strong> dentro de la red de transporte interurbano <strong>Movibus (Región de Murcia)</strong>.
+      <p style="font-size: 0.82rem; color: var(--text-secondary); text-align: center; margin-bottom: 16px; line-height: 1.45;">
+        Servicio operado por <strong>Interbus Murcia</strong> dentro de la red <strong>Movibus</strong>.
       </p>
 
-      <a href="tel:618640733" class="contact-action-row">
-        <div class="contact-left-block">
-          <div class="contact-icon-circle">
-            ${SVG_ICONS.phone}
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <!-- Install App Button (Sleek and minimalist) -->
+        <button onclick="installPWA()" class="contact-action-row" style="background: var(--movibus-lime-soft); border: 1.5px solid var(--movibus-lime); cursor: pointer; text-align: left;">
+          <div class="contact-left-block">
+            <div class="contact-icon-circle" style="background: var(--movibus-primary); color: #ffffff;">
+              ${SVG_ICONS.install}
+            </div>
+            <div>
+              <div style="font-size: 0.92rem; font-weight: 800; color: var(--text-primary);">Instalar App en el Móvil</div>
+              <div style="font-size: 0.74rem; color: var(--text-secondary);">Acceso rápido y funcionamiento sin internet</div>
+            </div>
           </div>
-          <div>
-            <div style="font-size: 0.95rem; font-weight: 800;">618 640 733</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Teléfono de información y objetos perdidos</div>
-          </div>
-        </div>
-        <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">Llamar →</span>
-      </a>
+          <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">Instalar →</span>
+        </button>
 
-      <a href="https://www.interbusmurcia.es" target="_blank" rel="noopener noreferrer" class="contact-action-row">
-        <div class="contact-left-block">
-          <div class="contact-icon-circle" style="background: var(--movibus-lime); color: var(--movibus-dark);">
-            ${SVG_ICONS.globe}
+        <!-- Official Phone -->
+        <a href="tel:618640733" class="contact-action-row">
+          <div class="contact-left-block">
+            <div class="contact-icon-circle">
+              ${SVG_ICONS.phone}
+            </div>
+            <div>
+              <div style="font-size: 0.92rem; font-weight: 800;">618 640 733</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted);">Teléfono de información y atención</div>
+            </div>
           </div>
-          <div>
-            <div style="font-size: 0.95rem; font-weight: 800;">interbusmurcia.es</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Portal web oficial Movibus</div>
-          </div>
-        </div>
-        <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">Visitar ↗</span>
-      </a>
+          <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">Llamar →</span>
+        </a>
 
-      <a href="${LINE_DATA.pdfFile}" download class="contact-action-row" style="margin-top:10px;">
-        <div class="contact-left-block">
-          <div class="contact-icon-circle" style="background: #e11d48; color: #fff;">
-            ${SVG_ICONS.pdf}
+        <!-- Official Web -->
+        <a href="https://www.interbusmurcia.es" target="_blank" rel="noopener noreferrer" class="contact-action-row">
+          <div class="contact-left-block">
+            <div class="contact-icon-circle" style="background: var(--movibus-lime); color: var(--movibus-dark);">
+              ${SVG_ICONS.globe}
+            </div>
+            <div>
+              <div style="font-size: 0.92rem; font-weight: 800;">interbusmurcia.es</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted);">Página web oficial de Movibus</div>
+            </div>
           </div>
-          <div>
-            <div style="font-size: 0.95rem; font-weight: 800;">Descargar PDF Oficial</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">Línea 34 - Versión 2 (PDF Original)</div>
+          <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">Visitar ↗</span>
+        </a>
+
+        <!-- Download PDF -->
+        <a href="${LINE_DATA.pdfFile}" download class="contact-action-row">
+          <div class="contact-left-block">
+            <div class="contact-icon-circle" style="background: #e11d48; color: #fff;">
+              ${SVG_ICONS.pdf}
+            </div>
+            <div>
+              <div style="font-size: 0.92rem; font-weight: 800;">Descargar Horarios en PDF</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted);">Documento oficial (Versión 2)</div>
+            </div>
           </div>
-        </div>
-        <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">Bajar PDF ↓</span>
-      </a>
+          <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">PDF ↓</span>
+        </a>
+      </div>
+
+      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.72rem; color: var(--text-muted);">Versión 2.0 • PWA Offline</span>
+        <button onclick="checkForAppUpdates()" style="background: transparent; border: none; color: var(--movibus-primary); font-size: 0.74rem; font-weight: 700; cursor: pointer; text-decoration: underline; display: flex; align-items: center; gap: 4px;">
+          ${SVG_ICONS.bolt}
+          <span>Buscar actualizaciones</span>
+        </button>
+      </div>
     </div>
   `;
 }
@@ -1418,11 +1407,10 @@ function checkForAppUpdates() {
 function initServiceWorkerAutoUpdate() {
   if (!('serviceWorker' in navigator)) return;
 
+  const hadControllerOnLoad = !!navigator.serviceWorker.controller;
+
   navigator.serviceWorker.register('./sw.js').then((registration) => {
     swRegistration = registration;
-
-    // Check for updates immediately when opening the app
-    registration.update();
 
     // Listen for new updates
     registration.addEventListener('updatefound', () => {
@@ -1441,10 +1429,10 @@ function initServiceWorkerAutoUpdate() {
     console.log('ServiceWorker registration error:', err);
   });
 
-  // Seamlessly reload when the new Service Worker takes over
+  // Seamlessly reload ONLY when updating an existing worker, avoiding first-load loop
   let isRefreshing = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (!isRefreshing) {
+    if (hadControllerOnLoad && !isRefreshing) {
       isRefreshing = true;
       window.location.reload();
     }
@@ -1453,17 +1441,17 @@ function initServiceWorkerAutoUpdate() {
   // Check for updates when user returns to the app from background/multitasking
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible' && swRegistration) {
-      swRegistration.update();
+      swRegistration.update().catch(() => {});
     }
   });
 
   // Check for updates on window focus and reconnection
   window.addEventListener('focus', () => {
-    if (swRegistration) swRegistration.update();
+    if (swRegistration) swRegistration.update().catch(() => {});
   });
 
   window.addEventListener('online', () => {
-    if (swRegistration) swRegistration.update();
+    if (swRegistration) swRegistration.update().catch(() => {});
     showToast('Conexión a internet restablecida');
   });
 }
