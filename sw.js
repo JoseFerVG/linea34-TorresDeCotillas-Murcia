@@ -1,4 +1,9 @@
-const CACHE_NAME = 'movibus-l34-v2';
+/**
+ * MOVIBUS LÍNEA 34 - SERVICE WORKER (AUTO-UPDATE ENGINE)
+ * Production Cache with Network-First Strategy for Instant Updates
+ */
+
+const CACHE_NAME = 'movibus-l34-v3';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -17,7 +22,9 @@ const ASSETS_TO_CACHE = [
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
 ];
 
+// Install: Cache all core assets and activate immediately
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS_TO_CACHE).catch((err) => {
@@ -25,35 +32,53 @@ self.addEventListener('install', (event) => {
       });
     })
   );
-  self.skipWaiting();
 });
 
+// Activate: Remove outdated caches and take control of all open clients
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
         keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
       );
-    })
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
+// Listen for explicit skip waiting request from client
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// Fetch Strategy: Network-First with Cache Fallback for instant updates
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request).then((fetchRes) => {
-        return caches.open(CACHE_NAME).then((cache) => {
-          if (event.request.method === 'GET' && event.request.url.startsWith('http')) {
-            cache.put(event.request, fetchRes.clone());
-          }
-          return fetchRes;
-        });
-      }).catch(() => {
-        if (event.request.destination === 'document') {
-          return caches.match('./index.html');
+    fetch(event.request)
+      .then((networkResponse) => {
+        // If fetch succeeded, update cache in background
+        if (networkResponse && networkResponse.status === 200 && event.request.url.startsWith('http')) {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
         }
-      });
-    })
+        return networkResponse;
+      })
+      .catch(() => {
+        // If network failed (offline), serve from cache
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          // Fallback to index.html for navigation requests
+          if (event.request.destination === 'document' || event.request.mode === 'navigate') {
+            return caches.match('./index.html');
+          }
+        });
+      })
   );
 });

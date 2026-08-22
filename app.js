@@ -1011,6 +1011,11 @@ function renderInfoTab() {
         • <strong>Android (Chrome):</strong> Pulsa el botón de arriba o en el menú ⋮ selecciona <em>"Añadir a pantalla de inicio"</em>.<br>
         • <strong>iPhone / iOS (Safari):</strong> Pulsa el botón <strong>Compartir</strong> (icono de cuadrado con flecha hacia arriba) y elige <strong>"Añadir a la pantalla de inicio"</strong>.
       </div>
+
+      <button onclick="checkForAppUpdates()" class="btn-stop-action is-fav" style="margin-top: 12px; width: 100%; justify-content: center; padding: 9px 14px; font-size: 0.8rem; font-weight:800; cursor:pointer;">
+        ${SVG_ICONS.bolt}
+        <span>Comprobar Actualizaciones en Vivo</span>
+      </button>
     </div>
 
     <!-- CONTACT CARD -->
@@ -1485,12 +1490,15 @@ window.swapPlannerStops = swapPlannerStops;
 window.shareTripDetails = shareTripDetails;
 window.toggleFaq = toggleFaq;
 window.triggerAppInstallModal = triggerAppInstallModal;
+window.checkForAppUpdates = checkForAppUpdates;
 
 // ==========================================
-// 12. INITIALIZATION & PWA
+// 12. INITIALIZATION & AUTO-UPDATE ENGINE
 // ==========================================
 
 let deferredPrompt = null;
+let swRegistration = null;
+
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
@@ -1510,6 +1518,75 @@ window.installPWA = () => {
     triggerAppInstallModal();
   }
 };
+
+function checkForAppUpdates() {
+  if (!swRegistration) {
+    showToast('Comprobando versión...');
+    setTimeout(() => showToast('Tu aplicación está en la versión más reciente'), 800);
+    return;
+  }
+  showToast('Buscando actualizaciones...');
+  swRegistration.update().then(() => {
+    setTimeout(() => {
+      showToast('Tu aplicación está en la versión más reciente');
+    }, 1000);
+  }).catch(() => {
+    showToast('No se pudo verificar la actualización');
+  });
+}
+
+function initServiceWorkerAutoUpdate() {
+  if (!('serviceWorker' in navigator)) return;
+
+  navigator.serviceWorker.register('./sw.js').then((registration) => {
+    swRegistration = registration;
+
+    // Check for updates immediately when opening the app
+    registration.update();
+
+    // Listen for new updates
+    registration.addEventListener('updatefound', () => {
+      const newWorker = registration.installing;
+      if (newWorker) {
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // New version installed in background: activate immediately
+            showToast('Actualizando a la última versión...');
+            newWorker.postMessage({ type: 'SKIP_WAITING' });
+          }
+        });
+      }
+    });
+  }).catch((err) => {
+    console.log('ServiceWorker registration error:', err);
+  });
+
+  // Seamlessly reload when the new Service Worker takes over
+  let isRefreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!isRefreshing) {
+      isRefreshing = true;
+      window.location.reload();
+    }
+  });
+
+  // Check for updates when user returns to the app from background/multitasking
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && swRegistration) {
+      swRegistration.update();
+    }
+  });
+
+  // Check for updates on window focus and reconnection
+  window.addEventListener('focus', () => {
+    if (swRegistration) swRegistration.update();
+  });
+
+  window.addEventListener('online', () => {
+    if (swRegistration) swRegistration.update();
+    showToast('Conexión a internet restablecida');
+  });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   document.documentElement.setAttribute('data-theme', state.theme);
@@ -1544,10 +1621,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderAll();
   startLiveTicker();
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(err => {
-      console.log('ServiceWorker:', err);
-    });
-  }
+  initServiceWorkerAutoUpdate();
 });
