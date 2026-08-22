@@ -1471,11 +1471,60 @@ button, input, select, textarea {
   text-decoration: none;
   color: var(--text-primary);
   transition: all 0.2s ease;
+  width: 100%;
 }
 
 .contact-action-row:hover, .contact-action-row:active {
   border-color: var(--movibus-primary);
   background: var(--movibus-lime-soft);
+}
+
+.contact-action-row.install-row {
+  background: rgba(6, 72, 60, 0.06);
+  border: 1.5px solid var(--movibus-primary);
+}
+
+.contact-action-row.install-row:hover,
+.contact-action-row.install-row:active {
+  background: var(--movibus-lime-soft);
+  border-color: var(--movibus-primary);
+}
+
+.contact-action-row .contact-action-badge {
+  font-size: 0.85rem;
+  color: var(--movibus-primary);
+  font-weight: 800;
+}
+
+[data-theme="dark"] .contact-action-row {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--border-subtle);
+}
+
+[data-theme="dark"] .contact-action-row:hover,
+[data-theme="dark"] .contact-action-row:active {
+  border-color: var(--movibus-lime);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme="dark"] .contact-action-row.install-row {
+  background: rgba(189, 231, 78, 0.08);
+  border: 1.5px solid rgba(189, 231, 78, 0.4);
+}
+
+[data-theme="dark"] .contact-action-row.install-row:hover,
+[data-theme="dark"] .contact-action-row.install-row:active {
+  background: rgba(189, 231, 78, 0.16);
+  border-color: var(--movibus-lime);
+}
+
+[data-theme="dark"] .contact-action-row.install-row .contact-icon-circle {
+  background: var(--movibus-lime);
+  color: var(--movibus-darkest);
+}
+
+[data-theme="dark"] .contact-action-row .contact-action-badge {
+  color: var(--movibus-lime);
 }
 
 .contact-left-block {
@@ -1494,6 +1543,7 @@ button, input, select, textarea {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: all 0.2s ease;
 }
 
 .contact-icon-circle svg {

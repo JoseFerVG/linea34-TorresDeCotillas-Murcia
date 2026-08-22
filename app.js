@@ -995,9 +995,9 @@ function renderInfoTab() {
 
       <div style="display: flex; flex-direction: column; gap: 8px;">
         <!-- Install App Button (Sleek and minimalist) -->
-        <button onclick="installPWA()" class="contact-action-row" style="background: var(--movibus-lime-soft); border: 1.5px solid var(--movibus-lime); cursor: pointer; text-align: left;">
+        <button onclick="installPWA()" class="contact-action-row install-row" style="cursor: pointer; text-align: left;">
           <div class="contact-left-block">
-            <div class="contact-icon-circle" style="background: var(--movibus-primary); color: #ffffff;">
+            <div class="contact-icon-circle">
               ${SVG_ICONS.install}
             </div>
             <div>
@@ -1005,7 +1005,7 @@ function renderInfoTab() {
               <div style="font-size: 0.74rem; color: var(--text-secondary);">Acceso rápido y funcionamiento sin internet</div>
             </div>
           </div>
-          <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">Instalar →</span>
+          <span class="contact-action-badge">Instalar →</span>
         </button>
 
         <!-- Official Phone -->
@@ -1019,13 +1019,13 @@ function renderInfoTab() {
               <div style="font-size: 0.74rem; color: var(--text-muted);">Teléfono de información y atención</div>
             </div>
           </div>
-          <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">Llamar →</span>
+          <span class="contact-action-badge">Llamar →</span>
         </a>
 
         <!-- Official Web -->
         <a href="https://www.interbusmurcia.es" target="_blank" rel="noopener noreferrer" class="contact-action-row">
           <div class="contact-left-block">
-            <div class="contact-icon-circle" style="background: var(--movibus-lime); color: var(--movibus-dark);">
+            <div class="contact-icon-circle">
               ${SVG_ICONS.globe}
             </div>
             <div>
@@ -1033,7 +1033,7 @@ function renderInfoTab() {
               <div style="font-size: 0.74rem; color: var(--text-muted);">Página web oficial de Movibus</div>
             </div>
           </div>
-          <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">Visitar ↗</span>
+          <span class="contact-action-badge">Visitar ↗</span>
         </a>
 
         <!-- Download PDF -->
@@ -1047,7 +1047,7 @@ function renderInfoTab() {
               <div style="font-size: 0.74rem; color: var(--text-muted);">Documento oficial (Versión 2)</div>
             </div>
           </div>
-          <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">PDF ↓</span>
+          <span class="contact-action-badge">PDF ↓</span>
         </a>
       </div>
 
