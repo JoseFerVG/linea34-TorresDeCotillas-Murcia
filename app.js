@@ -1051,12 +1051,14 @@ function renderInfoTab() {
         </a>
       </div>
 
-      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-size: 0.72rem; color: var(--text-muted);">Versión 2.0 • PWA Offline</span>
-        <button onclick="checkForAppUpdates()" class="btn-check-updates">
-          ${SVG_ICONS.bolt}
-          <span>Buscar actualizaciones</span>
-        </button>
+      <button onclick="checkForAppUpdates()" class="btn-stop-action is-fav" style="margin-top: 14px; width: 100%; justify-content: center; padding: 10px 14px; font-size: 0.82rem; font-weight: 800; cursor: pointer; border-radius: var(--radius-md);">
+        ${SVG_ICONS.bolt}
+        <span>Comprobar Actualizaciones en Vivo</span>
+      </button>
+
+      <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.72rem; color: var(--text-muted);">Versión 2.0 Oficial • PWA</span>
+        <span style="font-size: 0.72rem; color: var(--text-muted);">Actualización Instantánea</span>
       </div>
     </div>
   `;
