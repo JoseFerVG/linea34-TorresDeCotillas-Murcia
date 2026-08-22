@@ -1,10 +1,13 @@
-const CACHE_NAME = 'movibus-l34-v1';
+const CACHE_NAME = 'movibus-l34-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './styles.css',
   './app.js',
   './manifest.json',
+  './assets/movibus-logo.svg',
+  './assets/region-murcia.svg',
+  './linea-34-version-2.pdf',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/favicon.png',
