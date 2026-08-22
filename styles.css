@@ -193,8 +193,9 @@ button, input, select, textarea {
   font-weight: 600;
   padding: calc(4px + var(--safe-top)) 16px 4px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -220,17 +221,18 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   APP HEADER (PDF MOVIBUS BRANDING RECREATION)
+   APP HEADER (PDF MOVIBUS BRANDING)
    ========================================================================== */
 .app-header {
   background: var(--bg-header);
   color: #ffffff;
-  padding: 14px 16px 22px;
+  padding: 16px 16px 22px;
   border-bottom-left-radius: var(--radius-xl);
   border-bottom-right-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 
 .app-header::before {
@@ -269,13 +271,15 @@ button, input, select, textarea {
 .brand-wrapper {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  flex: 1;
 }
 
 .movibus-logo-container {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
 }
 
 .movibus-brand-icon {
@@ -288,10 +292,11 @@ button, input, select, textarea {
 .movibus-brand-text {
   display: flex;
   flex-direction: column;
+  text-align: left;
 }
 
 .movibus-main-title {
-  font-size: 1.55rem;
+  font-size: 1.6rem;
   font-weight: 800;
   letter-spacing: 0.5px;
   color: var(--movibus-lime);
@@ -300,7 +305,7 @@ button, input, select, textarea {
 }
 
 .movibus-slogan-text {
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   color: #cfebe3;
   font-weight: 500;
   letter-spacing: 0.3px;
@@ -311,6 +316,10 @@ button, input, select, textarea {
   display: flex;
   align-items: center;
   gap: 8px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .btn-header-action {
@@ -351,13 +360,15 @@ button, input, select, textarea {
   position: relative;
   z-index: 2;
   backdrop-filter: blur(10px);
+  text-align: center;
 }
 
 .line-box-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 4px;
+  gap: 10px;
+  margin-bottom: 6px;
 }
 
 .line-badge-tag {
@@ -366,30 +377,34 @@ button, input, select, textarea {
   color: var(--movibus-lime);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
 }
 
 .line-version-tag {
-  font-size: 0.68rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 700;
   color: #bcded6;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 3px 10px;
   border-radius: var(--radius-full);
 }
 
 .line-corridor-name {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -0.2px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .pdf-tri-badges {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .tri-badge {
@@ -1656,7 +1671,7 @@ button, input, select, textarea {
   background: var(--bg-card);
   border-top: 1px solid var(--border-subtle);
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   padding-bottom: var(--safe-bottom);
   box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.08);
   z-index: 1000;

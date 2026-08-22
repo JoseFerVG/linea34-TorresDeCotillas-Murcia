@@ -902,81 +902,6 @@ function renderStopsTab() {
   }
 }
 
-function renderFaresTab() {
-  const container = document.getElementById('tab-tarifas-content');
-  if (!container) return;
-
-  container.innerHTML = `
-    <div style="margin-bottom: 14px;">
-      <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">
-        Títulos de Transporte y Descuentos Oficiales Movibus
-      </span>
-    </div>
-
-    <div class="fares-grid-container">
-      <div class="fare-card" style="border-left: 4px solid var(--movibus-primary);">
-        <div class="fare-card-header">
-          <div class="fare-title">Billete Sencillo</div>
-          <div class="fare-price">1,85 €</div>
-        </div>
-        <div class="fare-description">
-          Válido para un único viaje en la Línea 34. Se puede adquirir directamente al conductor a bordo del autobús.
-        </div>
-        <ul class="fare-perks-list">
-          <li>Pago en efectivo o con tarjeta bancaria sin contacto</li>
-          <li>Sin necesidad de tarjeta transporte previa</li>
-        </ul>
-      </div>
-
-      <div class="fare-card" style="border-left: 4px solid var(--movibus-lime); background: var(--movibus-lime-soft);">
-        <div class="fare-card-header">
-          <div>
-            <span class="tri-badge" style="margin-bottom:4px;">RECOMENDADO</span>
-            <div class="fare-title">Bono 10 Viajes Movibus</div>
-          </div>
-          <div class="fare-price" style="color:var(--movibus-dark);">7,00 € <span style="font-size:0.75rem; font-weight:600;">(0,70 €/viaje)</span></div>
-        </div>
-        <div class="fare-description">
-          Tarjeta recargable con descuento del 60% bonificado por el Gobierno de España y la Región de Murcia.
-        </div>
-        <ul class="fare-perks-list">
-          <li>Multiviajero: puede ser utilizado por varias personas a la vez</li>
-          <li>Recargable en la Estación de Autobuses y estancos</li>
-          <li>Ahorro de más del 60% sobre el billete ordinario</li>
-        </ul>
-      </div>
-
-      <div class="fare-card" style="border-left: 4px solid #0284c7;">
-        <div class="fare-card-header">
-          <div class="fare-title">Unibono / Bono Joven Estudiante</div>
-          <div class="fare-price">22,00 € <span style="font-size:0.75rem; font-weight:600;">/ mes</span></div>
-        </div>
-        <div class="fare-description">
-          Tarifa plana mensual para estudiantes de la UMU, UCAM e institutos entre Las Torres de Cotillas y Murcia.
-        </div>
-        <ul class="fare-perks-list">
-          <li>Viajes ilimitados durante 30 días naturales</li>
-          <li>Conexión con campus de Espinardo y Murcia Centro</li>
-        </ul>
-      </div>
-
-      <div class="fare-card" style="border-left: 4px solid #7c3aed;">
-        <div class="fare-card-header">
-          <div class="fare-title">Bono Familia Numerosa</div>
-          <div class="fare-price">Desc. 20% - 50%</div>
-        </div>
-        <div class="fare-description">
-          Bonificación directa presentando el título oficial de Familia Numerosa de la Región de Murcia.
-        </div>
-      </div>
-    </div>
-
-    <div class="official-notice-callout">
-      ${SVG_ICONS.tip} <strong>Puntos de Venta y Recarga:</strong> En la Estación Central de Autobuses de Murcia (San Andrés), estancos autorizados de Las Torres de Cotillas o en la web oficial de Interbus.
-    </div>
-  `;
-}
-
 function renderInfoTab() {
   const container = document.getElementById('tab-info-content');
   if (!container) return;
@@ -1455,7 +1380,6 @@ function renderAll() {
   renderTripPlanner();
   renderScheduleTab();
   renderStopsTab();
-  renderFaresTab();
   renderInfoTab();
   if (state.activeTab === 'mapa') {
     renderMapRouteAndStops();

@@ -19,7 +19,6 @@ Aplicación web progresiva (**PWA**) mobile-first, diseñada con la identidad gr
 * 🚍 **Rastreador de Autobús en Ruta (*Live In-Transit*):** Visualización del progreso del autobús activo sobre la línea y mapa.
 * 🗺️ **Mapa Interactivo (Leaflet & OpenStreetMap):** Traza completa del recorrido y botón de *Localizar mi parada más cercana* por GPS.
 * 🔔 **Sistema de Alarmas con Tono Acústico:** Avisos acústicos y notificaciones a 5, 10, 15 o 30 minutos antes de la salida.
-* 🎫 **Guía de Tarifas y Bonos:** Información sobre billete sencillo, Bono 10 con descuento del 60%, Unibono Estudiante y Familias Numerosas.
 * 📲 **100% Offline (PWA):** Instalable en la pantalla de inicio de Android e iOS sin necesidad de conexión a internet constante.
 
 ---
