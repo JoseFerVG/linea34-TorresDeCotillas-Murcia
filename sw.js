@@ -3,7 +3,7 @@
  * Ultra-stable cache engine with Network-First strategy
  */
 
-const CACHE_NAME = 'movibus-l34-v10';
+const CACHE_NAME = 'movibus-l34-v11';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
