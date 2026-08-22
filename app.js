@@ -181,6 +181,7 @@ const state = {
   simulatedTime: null,
   theme: localStorage.getItem('movibus_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
   searchTerm: '',
+  stopsTestDepartureTime: null,
   mapInstance: null,
   mapMarkers: [],
   mapPolyline: null,
@@ -810,8 +811,27 @@ function renderStopsTab() {
   if (!container) return;
 
   const dir = LINE_DATA.directions[state.currentDirection];
-  const { nextBus } = calculateNextBusInfo();
+  const actualDay = getActualDayType(getEffectiveDate());
+  const dayKey = state.selectedDayType === 'auto' ? actualDay : state.selectedDayType;
+  const scheduleList = dir.schedules[dayKey] || dir.schedules.laborables;
+  const { nextBus, nextDayBus, currentMinutes } = calculateNextBusInfo();
   const search = state.searchTerm.toLowerCase().trim();
+
+  // Active departure used for calculating passage times across all stops
+  let activeDepTime = state.stopsTestDepartureTime;
+  if (!activeDepTime) {
+    if (nextBus) {
+      activeDepTime = nextBus.departureTime;
+    } else if (nextDayBus) {
+      activeDepTime = nextDayBus.departureTime;
+    } else if (scheduleList.length > 0) {
+      activeDepTime = scheduleList[0].time;
+    } else {
+      activeDepTime = '07:00';
+    }
+  }
+
+  const baseMinutes = parseTimeToMinutes(activeDepTime);
 
   const filteredStops = dir.stops.filter(s => {
     if (!search) return true;
@@ -820,10 +840,41 @@ function renderStopsTab() {
            (s.landmark && s.landmark.toLowerCase().includes(search));
   });
 
-  const baseDepTime = nextBus ? nextBus.departureTime : '08:00';
-  const baseMinutes = parseTimeToMinutes(baseDepTime);
+  const nextBusLabel = nextBus ? nextBus.departureTime : (nextDayBus ? `${nextDayBus.departureTime} (Mañana)` : '07:00');
 
   container.innerHTML = `
+    <!-- TEST / SELECT DEPARTURE FOR STOPS -->
+    <div class="info-section-card" style="margin-bottom: 12px; padding: 12px 14px; background: var(--bg-card); border: 1.5px solid var(--border-subtle);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+        <span style="font-size: 0.78rem; font-weight: 800; color: var(--text-primary); text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+          ${SVG_ICONS.clock} Próximo bus y paso por paradas
+        </span>
+        <span style="font-size: 0.72rem; color: var(--movibus-primary); font-weight: 800; background: var(--movibus-lime-soft); padding: 2px 8px; border-radius: var(--radius-full);">
+          Salida: ${activeDepTime}
+        </span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <label for="stops-dep-select" style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 700; flex-shrink: 0;">
+          Elegir / Probar salida:
+        </label>
+        <select id="stops-dep-select" class="search-input-field" style="flex: 1; min-width: 140px; padding: 6px 10px; font-size: 0.8rem; border-radius: var(--radius-sm);" onchange="setStopsDeparture(this.value)">
+          <option value="" ${!state.stopsTestDepartureTime ? 'selected' : ''}>⚡ Próximo en vivo (${nextBusLabel})</option>
+          ${scheduleList.map(item => `
+            <option value="${item.time}" ${state.stopsTestDepartureTime === item.time ? 'selected' : ''}>
+              Salida ${item.time} ${item.special ? `(${item.note})` : ''}
+            </option>
+          `).join('')}
+        </select>
+        ${state.stopsTestDepartureTime ? `
+          <button class="btn-stop-action" onclick="setStopsDeparture(null)" style="padding: 6px 10px; font-size: 0.75rem; border-color: var(--movibus-lime);">
+            En vivo
+          </button>
+        ` : ''}
+      </div>
+    </div>
+
+    <!-- SEARCH FILTER BAR -->
     <div class="search-filter-box">
       <svg class="search-field-icon" viewBox="0 0 24 24" fill="currentColor">
         <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
@@ -835,8 +886,8 @@ function renderStopsTab() {
       <span style="font-size: 0.78rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">
         ${filteredStops.length} Paradas en sentido ${dir.name}
       </span>
-      <span style="font-size: 0.75rem; color: var(--movibus-primary); font-weight: 800;">
-        Salida base: <strong>${baseDepTime}</strong>
+      <span style="font-size: 0.75rem; color: var(--text-muted);">
+        Hora estimada de paso
       </span>
     </div>
 
@@ -849,6 +900,17 @@ function renderStopsTab() {
         const estimatedPassTime = formatMinutesToTime(passMin);
         const isFav = state.favoriteStopId === stop.id;
 
+        // Relative time until arrival
+        const diff = passMin - currentMinutes;
+        let relativeBadge = '';
+        if (!state.stopsTestDepartureTime) {
+          if (diff > 0) {
+            relativeBadge = diff < 60 ? `en ${diff} min` : `en ${Math.floor(diff / 60)}h ${diff % 60}m`;
+          } else if (diff >= -5) {
+            relativeBadge = 'Pasa ahora';
+          }
+        }
+
         return `
           <div class="timeline-row-item ${isCabecera ? 'is-cabecera' : ''} ${isTermino ? 'is-termino' : ''} ${isUserSelected ? 'is-user-selected' : ''}" data-stop-id="${stop.id}">
             <div class="timeline-circle-node">
@@ -858,7 +920,10 @@ function renderStopsTab() {
             <div class="timeline-text-content">
               <div class="timeline-name-row">
                 <span class="timeline-stop-title">${stop.name}</span>
-                <span class="timeline-eta-pill">~${estimatedPassTime}</span>
+                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:2px;">
+                  <span class="timeline-eta-pill">~${estimatedPassTime}</span>
+                  ${relativeBadge ? `<span style="font-size:0.65rem; color:var(--movibus-primary); font-weight:700;">${relativeBadge}</span>` : ''}
+                </div>
               </div>
 
               <div class="timeline-stop-subtitle">
@@ -899,6 +964,16 @@ function renderStopsTab() {
         newInput.setSelectionRange(newInput.value.length, newInput.value.length);
       }
     });
+  }
+}
+
+function setStopsDeparture(depTime) {
+  state.stopsTestDepartureTime = depTime || null;
+  renderStopsTab();
+  if (depTime) {
+    showToast(`Mostrando paso para salida de las ${depTime}`);
+  } else {
+    showToast('Restaurado a la salida en tiempo real');
   }
 }
 
@@ -1360,6 +1435,7 @@ window.swapPlannerStops = swapPlannerStops;
 window.shareTripDetails = shareTripDetails;
 window.triggerAppInstallModal = triggerAppInstallModal;
 window.checkForAppUpdates = checkForAppUpdates;
+window.setStopsDeparture = setStopsDeparture;
 
 // ==========================================
 // 12. INITIALIZATION & AUTO-UPDATE ENGINE

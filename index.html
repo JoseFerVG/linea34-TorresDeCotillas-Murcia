@@ -115,36 +115,36 @@
       </div>
     </section>
 
-    <!-- HERO LIVE BOARD (NEXT BUS COUNTDOWN) -->
-    <section class="hero-bus-card" id="hero-next-bus">
-      <!-- Injected by app.js -->
-    </section>
-
-    <!-- DAY SELECTOR & SIMULATOR BAR -->
-    <section class="day-filter-wrapper">
-      <div class="day-tabs-pill-row" id="day-pills-row">
-        <!-- Rendered by app.js -->
-      </div>
-
-      <div class="simulator-toolbar">
-        <button class="btn-sim-trigger" id="btn-toggle-sim">
-          <svg class="svg-inline-icon" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.1.8-1.2-4.5-2.7V7z"/>
-          </svg>
-          <span>Probar otra hora o día</span>
-        </button>
-      </div>
-
-      <div class="simulator-drawer" id="simulator-box">
-        <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary);">Hora prueba:</span>
-        <input type="time" class="search-input-field" id="sim-time-input" value="12:00" style="padding:6px 10px; width:auto; border-radius: var(--radius-sm);">
-        <button class="btn-stop-action is-fav" id="btn-apply-sim">Aplicar</button>
-        <button class="btn-stop-action" id="btn-reset-sim">Restaurar</button>
-      </div>
-    </section>
-
     <!-- TAB 1: HORARIOS (SCHEDULES & TIMETABLE) -->
     <section class="tab-content-panel active" id="tab-horarios">
+      <!-- HERO LIVE BOARD (NEXT BUS COUNTDOWN) -->
+      <div class="hero-bus-card" id="hero-next-bus">
+        <!-- Injected by app.js -->
+      </div>
+
+      <!-- DAY SELECTOR & SIMULATOR BAR -->
+      <div class="day-filter-wrapper">
+        <div class="day-tabs-pill-row" id="day-pills-row">
+          <!-- Rendered by app.js -->
+        </div>
+
+        <div class="simulator-toolbar">
+          <button class="btn-sim-trigger" id="btn-toggle-sim">
+            <svg class="svg-inline-icon" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.1.8-1.2-4.5-2.7V7z"/>
+            </svg>
+            <span>Probar otra hora o día</span>
+          </button>
+        </div>
+
+        <div class="simulator-drawer" id="simulator-box">
+          <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary);">Hora prueba:</span>
+          <input type="time" class="search-input-field" id="sim-time-input" value="12:00" style="padding:6px 10px; width:auto; border-radius: var(--radius-sm);">
+          <button class="btn-stop-action is-fav" id="btn-apply-sim">Aplicar</button>
+          <button class="btn-stop-action" id="btn-reset-sim">Restaurar</button>
+        </div>
+      </div>
+
       <!-- TRIP PLANNER WIDGET -->
       <div id="trip-planner-container"></div>
 
