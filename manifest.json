@@ -1,0 +1,31 @@
+{
+  "name": "Movibus Línea 34 - Torres de Cotillas / Murcia",
+  "short_name": "Movibus 34",
+  "description": "Horarios, paradas y próximo bus en tiempo real de la Línea 34 (Torres de Cotillas - Murcia).",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#04362d",
+  "theme_color": "#06483c",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["transportation", "travel", "utilities"]
+}

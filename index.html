@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#04362d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Movibus 34">
+  <meta name="description" content="App oficial y horarios en vivo de la Línea 34: Torres de Cotillas – Murcia (Movibus Región de Murcia).">
+
+  <title>Línea 34: Torres de Cotillas – Murcia | Movibus</title>
+
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <!-- Typography: Google Fonts Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Leaflet CSS for Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- App Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ==========================================
+       TOP STATUS BAR / SERVICE NOTICE
+       ========================================== -->
+  <div class="service-status-banner">
+    <div class="status-indicator-badge">
+      <span class="status-dot"></span>
+      <span>SERVICIO HABITUAL EN TIEMPO REAL</span>
+    </div>
+    <span style="font-size:0.68rem; opacity:0.85;">Versión 2 Oficial</span>
+  </div>
+
+  <!-- ==========================================
+       APP HEADER (PDF MOVIBUS BRANDING)
+       ========================================== -->
+  <header class="app-header">
+    <div class="header-top-bar">
+      <div class="brand-wrapper">
+        <div class="movibus-logo-container" style="display:flex; align-items:center;">
+          <img src="assets/movibus-logo.svg" alt="Movibus - muévete en autobús" style="height: 38px; width: auto; max-width: 220px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
+        </div>
+      </div>
+
+      <div class="header-actions-group">
+        <img src="assets/region-murcia.svg" alt="Región de Murcia" style="height: 28px; width: auto; opacity: 0.9;" class="header-region-crest">
+
+        <button class="btn-header-action" id="btn-theme-toggle" title="Cambiar modo claro / oscuro" aria-label="Cambiar tema">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Official PDF Line Badge -->
+    <div class="official-line-box">
+      <div class="line-box-header">
+        <div class="line-badge-tag">
+          <span>LÍNEA 34</span>
+        </div>
+        <div class="line-version-tag" id="live-clock-text">--:--:--</div>
+      </div>
+
+      <div class="line-corridor-name" id="header-route-title">Torres de Cotillas – Murcia</div>
+
+      <div class="pdf-tri-badges">
+        <span class="tri-badge">
+          <svg class="svg-inline-icon" viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm4.5 9c-.83 0-1.5-.67-1.5-1.5V6.5c0-.83-.67-1.5-1.5-1.5h-4C8.67 5 8 5.67 8 6.5V11H6v4h2v2c0 2.21 1.79 4 4 4s4-1.79 4-4v-2h2.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5zm-4.5 8c-1.1 0-2-.9-2-2v-2h4v2c0 1.1-.9 2-2 2z"/></svg>
+          + Accesible
+        </span>
+        <span class="tri-badge">
+          <svg class="svg-inline-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          + Cercano
+        </span>
+        <span class="tri-badge">
+          <svg class="svg-inline-icon" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg>
+          + Sostenible
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       MAIN CONTENT CONTAINER
+       ========================================== -->
+  <main class="main-wrapper">
+
+    <!-- PWA Install Banner -->
+    <div id="pwa-install-banner" style="display:none; background: var(--movibus-lime-soft); border: 1.5px solid var(--movibus-lime); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 16px; align-items: center; justify-content: space-between; gap: 10px; box-shadow: var(--shadow-sm);">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <svg class="svg-inline-icon svg-icon-lg" style="color:var(--movibus-primary);" viewBox="0 0 24 24">
+          <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14zm-4.2-5.79l1.79-1.79-1.41-1.41-2.18 2.18-1.18-1.18-1.41 1.41 2.59 2.59 1.8-1.8z"/>
+        </svg>
+        <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary);">
+          ¿Instalar app en tu pantalla de inicio?
+        </span>
+      </div>
+      <button onclick="installPWA()" style="background: var(--movibus-primary); color: #fff; border:none; padding: 7px 14px; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 800; cursor: pointer; white-space: nowrap;">
+        Instalar
+      </button>
+    </div>
+
+    <!-- DIRECTION SWITCHER -->
+    <section class="direction-card">
+      <div class="direction-top-label">
+        <span class="direction-title-txt">Sentido de Circulación</span>
+        <span style="font-size:0.75rem; color:var(--text-muted);">Toca para alternar</span>
+      </div>
+
+      <div class="direction-segmented-grid">
+        <button class="btn-direction-tab active" id="btn-dir-ida">
+          <span class="dir-tag-label">Ida</span>
+          <span class="dir-dest-label">Murcia</span>
+        </button>
+
+        <button class="btn-swap-dir" id="btn-swap-direction" title="Invertir sentido de viaje" aria-label="Invertir sentido">
+          <svg viewBox="0 0 24 24">
+            <path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/>
+          </svg>
+        </button>
+
+        <button class="btn-direction-tab" id="btn-dir-vuelta">
+          <span class="dir-tag-label">Vuelta</span>
+          <span class="dir-dest-label">Las Torres</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- HERO LIVE BOARD (NEXT BUS COUNTDOWN) -->
+    <section class="hero-bus-card" id="hero-next-bus">
+      <!-- Injected by app.js -->
+    </section>
+
+    <!-- DAY SELECTOR & SIMULATOR BAR -->
+    <section class="day-filter-wrapper">
+      <div class="day-tabs-pill-row" id="day-pills-row">
+        <!-- Rendered by app.js -->
+      </div>
+
+      <div class="simulator-toolbar">
+        <button class="btn-sim-trigger" id="btn-toggle-sim">
+          <svg class="svg-inline-icon" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.1.8-1.2-4.5-2.7V7z"/>
+          </svg>
+          <span>Probar otra hora o día</span>
+        </button>
+      </div>
+
+      <div class="simulator-drawer" id="simulator-box">
+        <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary);">Hora prueba:</span>
+        <input type="time" class="search-input-field" id="sim-time-input" value="12:00" style="padding:6px 10px; width:auto; border-radius: var(--radius-sm);">
+        <button class="btn-stop-action is-fav" id="btn-apply-sim">Aplicar</button>
+        <button class="btn-stop-action" id="btn-reset-sim">Restaurar</button>
+      </div>
+    </section>
+
+    <!-- TAB 1: HORARIOS (SCHEDULES & TIMETABLE) -->
+    <section class="tab-content-panel active" id="tab-horarios">
+      <!-- TRIP PLANNER WIDGET -->
+      <div id="trip-planner-container"></div>
+
+      <!-- COMPLETE SCHEDULES -->
+      <div id="tab-horarios-content"></div>
+    </section>
+
+    <!-- TAB 2: RECORRIDO Y PARADAS (TIMELINE) -->
+    <section class="tab-content-panel" id="tab-paradas">
+      <div id="tab-paradas-content"></div>
+    </section>
+
+    <!-- TAB 3: MAPA INTERACTIVO -->
+    <section class="tab-content-panel" id="tab-mapa">
+      <div class="map-view-card">
+        <div class="map-toolbar-row">
+          <div class="map-legend-items">
+            <span><span class="legend-color-dot origin"></span> Origen</span>
+            <span><span class="legend-color-dot dest"></span> Destino</span>
+            <span><span class="legend-color-dot stop"></span> Paradas</span>
+          </div>
+          <button class="btn-map-locate" onclick="locateUserOnMap()">
+            <svg class="svg-inline-icon" viewBox="0 0 24 24">
+              <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+            </svg>
+            <span>Mi Parada Cercana</span>
+          </button>
+        </div>
+        <div id="leaflet-map"></div>
+      </div>
+      <div class="official-notice-callout">
+        <svg class="svg-inline-icon" style="color:var(--movibus-primary); margin-right:4px;" viewBox="0 0 24 24">
+          <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/>
+        </svg>
+        <strong>Mapa Interactivo:</strong> Toca cualquier parada para ver el tiempo estimado de llegada y marcarla como tu parada habitual.
+      </div>
+    </section>
+
+    <!-- TAB 4: TARIFAS Y BONOS -->
+    <section class="tab-content-panel" id="tab-tarifas">
+      <div id="tab-tarifas-content"></div>
+    </section>
+
+    <!-- TAB 5: INFORMACIÓN & FAQ -->
+    <section class="tab-content-panel" id="tab-info">
+      <div id="tab-info-content"></div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       BOTTOM APP NAVIGATION BAR
+       ========================================== -->
+  <nav class="bottom-nav-bar" aria-label="Navegación principal de la app">
+    <button class="nav-tab-btn active" data-tab="horarios">
+      <svg viewBox="0 0 24 24">
+        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+      </svg>
+      <span class="nav-tab-label">Horarios</span>
+    </button>
+
+    <button class="nav-tab-btn" data-tab="paradas">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z"/>
+      </svg>
+      <span class="nav-tab-label">Paradas</span>
+    </button>
+
+    <button class="nav-tab-btn" data-tab="mapa">
+      <svg viewBox="0 0 24 24">
+        <path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/>
+      </svg>
+      <span class="nav-tab-label">Mapa</span>
+    </button>
+
+    <button class="nav-tab-btn" data-tab="tarifas">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 6h-2.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.05 0-1.96.54-2.5 1.35l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z"/>
+      </svg>
+      <span class="nav-tab-label">Tarifas</span>
+    </button>
+
+    <button class="nav-tab-btn" data-tab="info">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+      </svg>
+      <span class="nav-tab-label">Info</span>
+    </button>
+  </nav>
+
+  <!-- ==========================================
+       ALARM / REMINDER MODAL BOTTOM SHEET
+       ========================================== -->
+  <div class="modal-backdrop" id="alarm-modal">
+    <div class="modal-sheet-panel">
+      <div class="sheet-drag-handle"></div>
+      <div class="group-title-row">
+        <div class="group-title-txt">
+          <svg class="svg-inline-icon" style="color:var(--movibus-primary);" viewBox="0 0 24 24">
+            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+          </svg>
+          <span>Avisar de salida: <span id="modal-alarm-time" style="color: var(--movibus-primary);">--:--</span></span>
+        </div>
+        <button class="btn-header-action" id="btn-close-modal" aria-label="Cerrar modal" style="color: var(--text-secondary); background: transparent; border:none;">
+          <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
+        ¿Con cuánta antelación deseas recibir el aviso acústico y la notificación?
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+        <button class="day-tab-pill btn-alarm-option" data-mins="5" style="border: 1.5px solid var(--border-subtle); padding: 12px; font-weight:800;">5 minutos antes</button>
+        <button class="day-tab-pill btn-alarm-option" data-mins="10" style="border: 1.5px solid var(--movibus-lime); padding: 12px; background: var(--movibus-lime-soft); color: var(--movibus-dark); font-weight:800;">10 minutos antes</button>
+        <button class="day-tab-pill btn-alarm-option" data-mins="15" style="border: 1.5px solid var(--border-subtle); padding: 12px; font-weight:800;">15 minutos antes</button>
+        <button class="day-tab-pill btn-alarm-option" data-mins="30" style="border: 1.5px solid var(--border-subtle); padding: 12px; font-weight:800;">30 minutos antes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATIONS CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Leaflet JS for Map -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- App JS -->
+  <script src="app.js"></script>
+</body>
+</html>
