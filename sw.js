@@ -3,7 +3,7 @@
  * Ultra-stable cache engine with Network-First strategy
  */
 
-const CACHE_NAME = 'movibus-l34-v5';
+const CACHE_NAME = 'movibus-l34-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -11,6 +11,7 @@ const ASSETS_TO_CACHE = [
   './app.js',
   './manifest.json',
   './linea-34-version-2.pdf',
+  './icons/favicon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/favicon.png',
