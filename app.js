@@ -1053,7 +1053,7 @@ function renderInfoTab() {
 
       <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
         <span style="font-size: 0.72rem; color: var(--text-muted);">Versión 2.0 • PWA Offline</span>
-        <button onclick="checkForAppUpdates()" style="background: transparent; border: none; color: var(--movibus-primary); font-size: 0.74rem; font-weight: 700; cursor: pointer; text-decoration: underline; display: flex; align-items: center; gap: 4px;">
+        <button onclick="checkForAppUpdates()" class="btn-check-updates">
           ${SVG_ICONS.bolt}
           <span>Buscar actualizaciones</span>
         </button>

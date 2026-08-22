@@ -1544,6 +1544,46 @@ button, input, select, textarea {
   color: var(--movibus-lime);
 }
 
+.btn-check-updates {
+  background: transparent;
+  border: none;
+  color: var(--movibus-primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+}
+
+.btn-check-updates svg {
+  color: #eab308;
+  width: 15px;
+  height: 15px;
+  filter: drop-shadow(0 0 4px rgba(234, 179, 8, 0.5));
+}
+
+.btn-check-updates:hover {
+  background: var(--bg-card-subtle);
+  text-decoration: underline;
+}
+
+[data-theme="dark"] .btn-check-updates {
+  color: var(--movibus-lime);
+}
+
+[data-theme="dark"] .btn-check-updates svg {
+  color: var(--movibus-lime);
+  filter: drop-shadow(0 0 6px rgba(189, 231, 78, 0.8));
+}
+
+[data-theme="dark"] .btn-check-updates:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
 .contact-left-block {
   display: flex;
   align-items: center;
