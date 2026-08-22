@@ -1170,10 +1170,27 @@ button, input, select, textarea {
   color: var(--text-secondary);
   margin-top: 14px;
   line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.official-notice-callout .svg-inline-icon {
+  color: var(--movibus-primary);
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
 }
 
 [data-theme="dark"] .official-notice-callout {
   border-left-color: var(--movibus-lime);
+  background: rgba(189, 231, 78, 0.08);
+  color: #d1eae2;
+}
+
+[data-theme="dark"] .official-notice-callout .svg-inline-icon {
+  color: var(--movibus-lime);
+  filter: drop-shadow(0 0 6px rgba(189, 231, 78, 0.7));
 }
 
 /* ==========================================
