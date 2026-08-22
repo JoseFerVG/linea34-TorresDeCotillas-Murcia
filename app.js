@@ -907,50 +907,52 @@ function renderInfoTab() {
   if (!container) return;
 
   container.innerHTML = `
-    <!-- INSTALL APP CARD -->
-    <div class="info-section-card" style="border: 2px solid var(--movibus-lime); background: linear-gradient(145deg, var(--bg-card) 0%, var(--movibus-lime-soft) 100%);">
-      <div class="group-title-txt" style="color: var(--movibus-dark);">
+    <!-- DOWNLOAD & INSTALL APP CARD -->
+    <div class="info-section-card" style="border: 2px solid var(--movibus-lime); background: linear-gradient(145deg, var(--bg-card) 0%, var(--movibus-lime-soft) 100%); text-align: center;">
+      <div class="group-title-txt" style="color: var(--movibus-dark); justify-content: center; margin-bottom: 8px;">
         ${SVG_ICONS.install}
-        <span>Instalar App en tu Móvil (PWA)</span>
+        <span>Descargar e Instalar App</span>
       </div>
 
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 10px 0 14px; line-height: 1.5;">
-        Instala esta aplicación directamente en la pantalla de inicio de tu smartphone para acceder a los horarios al instante y consultarlos <strong>incluso sin conexión a internet ni cobertura</strong>.
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 16px; line-height: 1.5;">
+        Instala la app en tu móvil para consultar los horarios al instante, recibir avisos de salida y usarla <strong>sin conexión a internet</strong>.
       </p>
 
-      <button onclick="triggerAppInstallModal()" class="contact-action-row" style="width:100%; background: var(--movibus-primary); color:#ffffff; border:none; cursor:pointer;">
+      <button onclick="installPWA()" class="contact-action-row" style="width: 100%; background: var(--movibus-primary); color: #ffffff; border: none; cursor: pointer; justify-content: space-between; padding: 14px 16px; border-radius: var(--radius-md); box-shadow: 0 4px 14px rgba(6, 72, 60, 0.25);">
         <div class="contact-left-block">
-          <div class="contact-icon-circle" style="background: var(--movibus-lime); color: var(--movibus-dark);">
+          <div class="contact-icon-circle" style="background: var(--movibus-lime); color: var(--movibus-dark); width: 38px; height: 38px;">
             ${SVG_ICONS.install}
           </div>
-          <div style="text-align:left;">
-            <div style="font-size: 0.95rem; font-weight: 800; color:#ffffff;">Instalar en este Dispositivo</div>
-            <div style="font-size: 0.75rem; color: #d0ebe3;">Acceso directo rápido y sin descargas pesadas</div>
+          <div style="text-align: left;">
+            <div style="font-size: 1rem; font-weight: 800; color: #ffffff;">Descargar App</div>
+            <div style="font-size: 0.75rem; color: #d0ebe3;">Instalación directa en pantalla de inicio</div>
           </div>
         </div>
-        <span style="font-size: 0.85rem; color: var(--movibus-lime); font-weight: 800;">Instalar →</span>
+        <span style="font-size: 0.9rem; color: var(--movibus-lime); font-weight: 800; display: flex; align-items: center; gap: 4px;">
+          Descargar ↓
+        </span>
       </button>
 
-      <div style="margin-top: 12px; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.45;">
-        <strong>Instrucciones según tu móvil:</strong><br>
-        • <strong>Android (Chrome):</strong> Pulsa el botón de arriba o en el menú ⋮ selecciona <em>"Añadir a pantalla de inicio"</em>.<br>
-        • <strong>iPhone / iOS (Safari):</strong> Pulsa el botón <strong>Compartir</strong> (icono de cuadrado con flecha hacia arriba) y elige <strong>"Añadir a la pantalla de inicio"</strong>.
+      <div style="margin-top: 14px; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.45; text-align: left; background: var(--bg-card); padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+        <strong>¿Cómo instalar según tu móvil?</strong><br>
+        • <strong>Android (Chrome):</strong> Pulsa el botón <em>"Descargar App"</em> o en el menú ⋮ elige <em>"Añadir a pantalla de inicio"</em>.<br>
+        • <strong>iPhone / iOS (Safari):</strong> Pulsa el botón <strong>Compartir</strong> (icono de cuadrado con flecha hacia arriba) y selecciona <strong>"Añadir a la pantalla de inicio"</strong>.
       </div>
 
-      <button onclick="checkForAppUpdates()" class="btn-stop-action is-fav" style="margin-top: 12px; width: 100%; justify-content: center; padding: 9px 14px; font-size: 0.8rem; font-weight:800; cursor:pointer;">
+      <button onclick="checkForAppUpdates()" class="btn-stop-action is-fav" style="margin-top: 12px; width: 100%; justify-content: center; padding: 9px 14px; font-size: 0.8rem; font-weight: 800; cursor: pointer;">
         ${SVG_ICONS.bolt}
         <span>Comprobar Actualizaciones en Vivo</span>
       </button>
     </div>
 
-    <!-- CONTACT CARD -->
+    <!-- CONTACT & PDF CARD -->
     <div class="info-section-card">
-      <div class="group-title-txt">
+      <div class="group-title-txt" style="justify-content: center; margin-bottom: 8px;">
         ${SVG_ICONS.phone}
         <span>Atención al Cliente e Información</span>
       </div>
 
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 10px 0 14px;">
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 14px; text-align: center;">
         Servicio oficial operado por <strong>Interbus Murcia</strong> dentro de la red de transporte interurbano <strong>Movibus (Región de Murcia)</strong>.
       </p>
 
@@ -993,44 +995,6 @@ function renderInfoTab() {
         <span style="font-size: 0.85rem; color: var(--movibus-primary); font-weight: 800;">Bajar PDF ↓</span>
       </a>
     </div>
-
-    <!-- FAQ Accordion -->
-    <div class="info-section-card">
-      <div class="group-title-txt" style="margin-bottom:12px;">
-        ${SVG_ICONS.faq}
-        <span>Preguntas Frecuentes</span>
-      </div>
-
-      <div class="faq-accordion-item">
-        <button class="faq-question-btn" onclick="toggleFaq(this)">
-          <span>¿Se puede pagar con tarjeta bancaria en el bus?</span>
-          <span class="faq-caret">${SVG_ICONS.caretDown}</span>
-        </button>
-        <div class="faq-answer-txt">
-          Sí, todos los autobuses de Movibus disponen de terminal de pago con tarjeta bancaria contactless y móvil.
-        </div>
-      </div>
-
-      <div class="faq-accordion-item">
-        <button class="faq-question-btn" onclick="toggleFaq(this)">
-          <span>¿Dónde para en Murcia para enlazar con el Tranvía?</span>
-          <span class="faq-caret">${SVG_ICONS.caretDown}</span>
-        </button>
-        <div class="faq-answer-txt">
-          Puedes hacer trasbordo inmediato con la Línea 1 del Tranvía en las paradas de <strong>Plaza Circular</strong>, <strong>Barnés</strong> y <strong>Biblioteca Regional</strong>.
-        </div>
-      </div>
-
-      <div class="faq-accordion-item">
-        <button class="faq-question-btn" onclick="toggleFaq(this)">
-          <span>¿Puedo viajar con bicicleta o patinete?</span>
-          <span class="faq-caret">${SVG_ICONS.caretDown}</span>
-        </button>
-        <div class="faq-answer-txt">
-          Los patinetes y bicicletas plegables pueden viajar en el maletero o espacio habilitado siempre que no comprometan la seguridad ni ocupen pasillos.
-        </div>
-      </div>
-    </div>
   `;
 }
 
@@ -1042,13 +1006,6 @@ function triggerAppInstallModal() {
     });
   } else {
     showToast('Para instalar: usa el menú de tu navegador "Añadir a pantalla de inicio"');
-  }
-}
-
-function toggleFaq(btn) {
-  const item = btn.closest('.faq-accordion-item');
-  if (item) {
-    item.classList.toggle('open');
   }
 }
 
@@ -1412,7 +1369,6 @@ window.applySimulatedTime = applySimulatedTime;
 window.resetSimulatedTime = resetSimulatedTime;
 window.swapPlannerStops = swapPlannerStops;
 window.shareTripDetails = shareTripDetails;
-window.toggleFaq = toggleFaq;
 window.triggerAppInstallModal = triggerAppInstallModal;
 window.checkForAppUpdates = checkForAppUpdates;
 

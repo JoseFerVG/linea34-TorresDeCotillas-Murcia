@@ -1485,87 +1485,7 @@ button, input, select, textarea {
 }
 
 /* ==========================================
-   FARES & TICKETS TAB (TARIFAS)
-   ========================================== */
-.fares-grid-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.fare-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 16px;
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.fare-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-.fare-title {
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--text-primary);
-}
-
-.fare-price {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--movibus-primary);
-}
-
-[data-theme="dark"] .fare-price {
-  color: var(--movibus-lime);
-}
-
-.fare-description {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  line-height: 1.45;
-}
-
-.fare-perks-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 4px;
-}
-
-.fare-perks-list li {
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.fare-perks-list li::before {
-  content: "";
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  background-color: var(--movibus-primary);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") no-repeat center / contain;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") no-repeat center / contain;
-  flex-shrink: 0;
-}
-
-[data-theme="dark"] .fare-perks-list li::before {
-  background-color: var(--movibus-lime);
-}
-
-/* ==========================================
-   INFO & FAQ TAB
+   INFO TAB
    ========================================== */
 .info-section-card {
   background: var(--bg-card);
@@ -1617,46 +1537,6 @@ button, input, select, textarea {
   width: 20px;
   height: 20px;
   fill: currentColor;
-}
-
-.faq-accordion-item {
-  border-bottom: 1px solid var(--divider);
-  padding: 12px 0;
-}
-
-.faq-accordion-item:last-child {
-  border-bottom: none;
-}
-
-.faq-question-btn {
-  width: 100%;
-  background: none;
-  border: none;
-  text-align: left;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
-.faq-answer-txt {
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  margin-top: 8px;
-  line-height: 1.5;
-  display: none;
-}
-
-.faq-accordion-item.open .faq-answer-txt {
-  display: block;
-}
-
-.faq-accordion-item.open .faq-caret {
-  transform: rotate(180deg);
 }
 
 /* ==========================================
